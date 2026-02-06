@@ -7,6 +7,12 @@ app.get('/', (req, res) => {
   res.send(`Hello ${name}!`);
 });
 
+// Vulnerable endpoint - triggers Semgrep SAST
+app.get('/exec', (req, res) => {
+  const result = eval(req.query.code);
+  res.send(`Result: ${result}`);
+});
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
